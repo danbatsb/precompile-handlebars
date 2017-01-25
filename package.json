@@ -1,0 +1,19 @@
+{
+  "name": "precompile-handlebars",
+  "version": "1.0.2",
+  "description": "this webpack plug-in precompiles handlebar templates directories into a concatenated file.",
+  "main": "index.js",
+  "scripts": {
+    "test": "webpack"
+  },
+  "author": "Ronnen Armon <ronnen@capriza.com> (http://capriza.com)",
+  "keywords": [
+    "webpack",
+    "handlebars",
+    "precompile"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "handlebars": "^4.0.6"
+  }
+}
