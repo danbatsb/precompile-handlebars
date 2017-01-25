@@ -17,6 +17,7 @@ To give it a try just install the package, go to the mode_modules/precompile-han
 show up in the output directory. You can copy the plugin section in the webpack.config.js and add to your project plugins.
 To precompile partials just use _ (underscore) at the beginning of your template file name.
 
+## Usage
 A simple usage in webpack.config.js:
 
 ```
