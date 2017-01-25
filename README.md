@@ -19,6 +19,7 @@ To precompile partials just use _ (underscore) at the beginning of your template
 
 A simple usage in webpack.config.js:
 
+```
 var webpack = require('webpack');
 var HandlebarsPlugin = require("precompile-handlebars");
 
@@ -37,6 +38,7 @@ module.exports = {
         ])
     ],
 }
+```
 
 Feedback welcome.
 
