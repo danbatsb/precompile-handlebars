@@ -1,9 +1,8 @@
-// Handlebars/Webpack pre-compilation plugin v0.1
+// Handlebars/Webpack pre-compilation plugin
 // This plugin is meant to precompile and concatenate handlebars templates into a single file.
-// I could not find something similar in npm where most handlebars related loaders are about loading and compiling on-demand.
-// How to use:
+//
 // Plugin can take a single object or an array of objects each describing a pair of templates-directory and output-file.
-// for example:
+// example:
 //  plugins: [
 //      new HandlebarsPlugin([
 //          {
@@ -17,7 +16,6 @@
 //      ])
 //  ]
 //
-// author: ronnen
 
 var fs = require('fs');
 var path = require('path');
