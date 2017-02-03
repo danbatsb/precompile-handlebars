@@ -1,7 +1,7 @@
 // This file is only meant to demonstrate the plugin behavior
 
 const webpack = require('webpack');
-var HandlebarsPlugin = require("./index");
+var HandlebarsPlugin = require("../index");
 
 module.exports = {
     context: __dirname,
