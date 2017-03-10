@@ -1,4 +1,8 @@
-# precompile-handlebars
+<div align="center"><img src="https://capriza.github.io/images/logos/logos-turtle.svg" height="128" /></div>
+
+
+precompile-handlebars
+===
 
 A webpack plug-in to precompile handlebar templates directories into concatenated files.
 
