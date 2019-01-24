@@ -87,7 +87,7 @@ CompileHandlebars.prototype.apply = function(compiler) {
                         console.error("Failed to read directory");
                         return;
                     }
-                    files = files.filter(function(item) {return /^.*\.handlebars/.test(item);});
+                    files = files.filter(function(item) { return /^.*\.handlebars/.test(item) || /^.*\.hbs/.test(item); });
                     // console.log("Number of templates to process: " + files.length);
                     async.whilst(function() {
                         return index < files.length;
