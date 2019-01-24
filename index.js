@@ -40,7 +40,8 @@ function CompileHandlebars(options) {
     this.options = tasks.map(function(taskOptions) {
         return extend({
             inputDir: "templates",
-            outputFile: "output/compiled-templates.js"
+            outputFile: "compiled-templates.js",
+            outputDir: ""
         }, taskOptions);
     });
 }
@@ -59,16 +60,21 @@ CompileHandlebars.prototype.apply = function(compiler) {
 
     function doTask(options, callback) {
         var index = 0;
-        var outputFile = path.join(options.inputDir, options.outputFile);
+        var outputFile = path.join(options.outputDir, options.outputFile);
 
         async.series([
             function(cb) {
-                var outputDirectory = outputFile.match(/(.*)\/.*/)[1];
-                console.log("outputFile " + outputFile + " outputDirectory " + outputDirectory);
-                mkdirp(outputDirectory, function (err) {
-                    if (err) console.error(err);
-                    return cb(err);
-                });
+                if (options.outputDir && options.outputDir.length > 0) {
+                    var outputDirectory = options.outputDir;
+                    console.log("outputFile " + outputFile + " outputDirectory " + outputDirectory);
+                    mkdirp(outputDirectory, function (err) {
+                        if (err) console.error(err);
+                        return cb(err);
+                    });
+                }
+                else {
+                    cb(null);
+                }
             },
             function(cb) {
                 fs.writeFile(outputFile, preFile, function(err) {
