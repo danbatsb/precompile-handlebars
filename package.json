@@ -14,7 +14,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "handlebars": "4.0.6"
+    "handlebars": "4.0.6",
+    "nsdeclare": "0.1.0",
+    "underscore": "^1.9.1"
   },
   "repository": {
     "type": "git",
