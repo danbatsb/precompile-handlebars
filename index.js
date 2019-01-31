@@ -48,9 +48,9 @@ function CompileHandlebars(options) {
 
 CompileHandlebars.prototype.apply = function(compiler) {
     var plugin = this;
-    // console.log("CompileHandlebars plugin is loading... " + JSON.stringify(plugin.options));
+    console.log("CompileHandlebars plugin is loading... " + JSON.stringify(plugin.options));
 
-    compiler.plugin('run', function(compilation, callback) {
+    compiler.plugin('compile', function(compilation, callback) {
         async.parallel(plugin.options.map(function (options) {
             return function(cb) {
                 doTask(options, cb);
@@ -88,7 +88,7 @@ CompileHandlebars.prototype.apply = function(compiler) {
                         return;
                     }
                     files = files.filter(function(item) { return /^.*\.handlebars/.test(item) || /^.*\.hbs/.test(item); });
-                    // console.log("Number of templates to process: " + files.length);
+                    console.log("Number of templates to process: " + files.length);
                     async.whilst(function() {
                         return index < files.length;
                     }, function(cb) {
