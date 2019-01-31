@@ -6,8 +6,7 @@ var async = require('async');
 var mkdirp = require('mkdirp');
 var Handlebars = require('handlebars');
 
-var preFile = 'this["Handlebars"] = this["Handlebars"] || {};\n\
-this["Handlebars"]["templates"] = this["Handlebars"]["templates"] || {};\n\n';
+var preFile = 'this["Handlebars"] = this["Handlebars"] || {};\n\'';
 var preTemplate1 = 'this["Handlebars"]["templates"]["';
 var preTemplate2 = '"] = Handlebars.template(';
 var postTemplate = ');\n\n';
@@ -26,8 +25,7 @@ function CompileHandlebars(options) {
             inputDir: "templates",
             outputFile: "compiled-templates.js",
             outputDir: "",
-            namespace: "Handlebars",
-            amd: false
+            namespace: "Handlebars"
         }, taskOptions);
     });
 }
@@ -36,17 +34,7 @@ CompileHandlebars.prototype.apply = function(compiler) {
     var plugin = this;
     console.log("CompileHandlebars plugin is loading... " + JSON.stringify(plugin.options));
 
-    if (options.amd) {
-        prefile = 'define([\'handlebars\'], function(Handlebars) {\n\n';
-        finalTemplate = 'return ['+ options.namespace +'];';
-    }
-
-    preFile += 'this["'+ options.namespace +'"] = this["'+ options.namespace +'"] || {};\n\'';
-    preTemplate1 = 'this["'+ options.namespace +'"]["';
-    preTemplate2 = '"] = Handlebars.template(';
-    postTemplate = ');\n\n';
-
-
+    
     compiler.plugin('compile', function(compilation, callback) {
         async.parallel(plugin.options.map(function (options) {
             return function(cb) {
@@ -58,6 +46,16 @@ CompileHandlebars.prototype.apply = function(compiler) {
     function doTask(options, callback) {
         var index = 0;
         var outputFile = path.join(options.outputDir, options.outputFile);
+        
+        if (options.amd === true) {
+            preFile = 'define([\'handlebars\'], function(Handlebars) {\n\n';
+            finalTemplate = 'return this["'+ options.namespace +'"];\n\n});';
+        }
+    
+        preFile += 'this["'+ options.namespace +'"] = this["'+ options.namespace +'"] || {};\n\n';
+        preTemplate1 = 'this["'+ options.namespace +'"]["';
+        preTemplate2 = '"] = Handlebars.template(';
+        postTemplate = ');\n\n';
 
         async.series([
             function(cb) {
@@ -110,7 +108,7 @@ CompileHandlebars.prototype.apply = function(compiler) {
                                 templateSpec = prePartialTemplate1 + shortFileName.slice(1) + prePartialTemplate2 + templateSpec + postPartial;
                             }
                             else {
-                                templateSpec = shortFileName + preTemplate2 + templateSpec + postTemplate;
+                                templateSpec = preTemplate1 + shortFileName + preTemplate2 + templateSpec + postTemplate;
                             }
                             // console.log(templateSpec);
                             fs.appendFile(outputFile, templateSpec, function (err) {
@@ -126,7 +124,7 @@ CompileHandlebars.prototype.apply = function(compiler) {
                     cb(err);
                 });
                 console.log("Precompiled " + index + " templates from " + options.inputDir + " to " + options.outputFile);
-                cb();
+          
             }
         ], callback);
     }
